@@ -7,25 +7,40 @@ from PyQt5.QtGui import *
 class Main(QWidget):
     def __init__(self):
         super().__init__()
-        self.label_username = QLabel("User name :",self)
-        # self.label_username.setFrameShape(QFrame.Box)
         
-        self.label_username.move(200,150)
-        self.label_username.setFont(QFont("Tahoma",10))
-        
-        self.line_enter = QLineEdit(self)
-        self.line_enter.setPlaceholderText("Enter the name")
-        self.line_enter.move(300,150)
-        
-        self.button_search = QPushButton("Search",self)
-        self.button_search
-        self.button_search.move(260,180)
+        self.login = login(self)
         
         
-        self.resize(700,500)
+        
+        
+
+class login(QWidget):
+    def __init__(self, parent = Main):
+        super().__init__()
+        
+        self.label_username = QLabel("Username :",self)
+        self.label_password = QLabel("Password :",self)
+        
+        self.label_username.move(20,20)
+        self.label_password.move(20,60)
+
+        self.line_user = QLineEdit(self)
+        self.line_password = QLineEdit(self)
+        
+        self.line_user.move(120,20)
+        self.line_password.move(120,60)
+        
+        self.button_login = QPushButton("Login",self)
+        self.button_cancel = QPushButton("Cancel",self)
+        
+        self.button_login.move(100,100)
+        self.button_cancel.move(200,100)
+        
+        self.resize(300,180)
         self.show()
-        
-        
+
+
+
 app = QApplication([])
 window = Main()
 app.exec()
