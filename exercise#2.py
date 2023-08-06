@@ -17,6 +17,7 @@ class Main(QWidget):
 class login(QWidget):
     def __init__(self, parent = Main):
         super().__init__()
+        self.parent = parent
         
         self.label_username = QLabel("Username :",self)
         self.label_password = QLabel("Password :",self)
@@ -30,6 +31,8 @@ class login(QWidget):
         self.line_user.move(120,20)
         self.line_password.move(120,60)
         
+        self.line_password.setEchoMode(QLineEdit.Password)
+        
         self.button_login = QPushButton("Login",self)
         self.button_cancel = QPushButton("Cancel",self)
         
@@ -39,7 +42,15 @@ class login(QWidget):
         self.resize(300,180)
         self.show()
 
+        self.button_login.clicked.connect(self.access)
+        self.button_cancel.clicked.connect(self.cancel)
 
+    def cancel(self):
+        self.close()
+    def access(self):
+        if self.line_user.text() == "SimoN" and self.line_password.text() == "SavioR":
+            self.parent.show()
+            self.close()
 
 app = QApplication([])
 window = Main()
