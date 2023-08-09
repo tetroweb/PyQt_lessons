@@ -18,7 +18,7 @@ class Main(QWidget):
         print(self.spin.value())
         self.spin.setValue(20)
         
-        #tuşa bastığımızda sayının kaçar kaçar değişeceğini belirler
+        #he algorithm determines how the number will change incrementally when a key is pressed.
         self.spin.setSingleStep(5)
         
         self.spin.setSuffix(" TL")
