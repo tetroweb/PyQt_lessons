@@ -11,14 +11,14 @@ class main(QWidget):
         self.form = QFormLayout(self)
         
         self.form.addWidget(QPushButton("click form"))
-        self.form.addRow(QPushButton("name"),QLineEdit())
-        self.form.addRow(QPushButton("surname"),QLineEdit())
+        self.form.addRow(QLabel("name"),QLineEdit())
+        self.form.addRow(QLabel("surname"),QLineEdit())
         
         self.form.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)
         
         self.form.setFormAlignment(Qt.AlignBottom)
         
-        self.form.removeRow(1)
+        self.form.removeRow(1)#indis olarak veya ismini yazarak silme işlemi yapılabilir
         
         self.resize(800,500)
         self.show()
