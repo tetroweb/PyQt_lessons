@@ -18,7 +18,7 @@ class main(QWidget):
         
         self.form.setFormAlignment(Qt.AlignBottom)
         
-        self.form.removeRow(1)#indis olarak veya ismini yazarak silme işlemi yapılabilir
+        self.form.removeRow(1)#Deletion can be performed by index or by writing its name.
         
         self.resize(800,500)
         self.show()
