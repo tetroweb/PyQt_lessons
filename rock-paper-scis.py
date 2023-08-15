@@ -31,7 +31,7 @@ class main(QWidget):
         self.paper_button.setMinimumHeight(60)
         self.paper_button.setIcon(QIcon("paper.png"))
         self.paper_button.setIconSize(QSize(80,80))
-        self.paper_button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        # self.paper_button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.paper_button.setFont(QFont(font))
         
         self.scissor_button = QToolButton()
