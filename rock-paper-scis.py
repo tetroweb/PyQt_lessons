@@ -22,16 +22,23 @@ class main(QWidget):
         self.rock_button = QToolButton()
         self.rock_button.setText("Rock")
         self.rock_button.setMinimumHeight(60)
+        self.rock_button.setIcon(QIcon("rock.png"))
+        self.rock_button.setIconSize(QSize(80,80))
         self.rock_button.setFont(QFont(font))
         
         self.paper_button = QToolButton()
         self.paper_button.setText("Paper")
         self.paper_button.setMinimumHeight(60)
+        self.paper_button.setIcon(QIcon("paper.png"))
+        self.paper_button.setIconSize(QSize(80,80))
+        self.paper_button.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.paper_button.setFont(QFont(font))
         
         self.scissor_button = QToolButton()
         self.scissor_button.setText("Scissor")
         self.scissor_button.setMinimumHeight(60)
+        self.scissor_button.setIcon(QIcon("scissor.png"))
+        self.scissor_button.setIconSize(QSize(80,80))
         self.scissor_button.setFont(QFont(font))
         
         self.comp_label = QLabel("Computer")
@@ -76,9 +83,25 @@ class main(QWidget):
         self.resize(350,250)
         self.show()
         
-        self.rock_button.clicked.connect(lambda :self.compare())
+        self.rock_button.clicked.connect(lambda :self.compare("Rock"))
+        self.paper_button.clicked.connect(lambda :self.compare("Paper"))
+        self.scissor_button.clicked.connect(lambda :self.compare("Scissor"))
         
-        
+    def compare(self,choose):
+        random_pc = r.choice(["Rock","Paper","Scissor"])
+        choose_tuple = (choose,random_pc)
+        self.comp_choose.setText(random_pc)
+        if choose_tuple in winner:
+            self.res_label.setText("Win :)")
+            self.score1.setText(str(int(self.score1.text())+1))
+            self.res_label.setStyleSheet("color : blue;")
+        elif choose_tuple in loser:
+            self.res_label.setText("Lose :(")
+            self.score2.setText(str(int(self.score2.text())+1))
+            self.res_label.setStyleSheet("color : red;")
+        else:
+            self.res_label.setText("Draw")
+            self.res_label.setStyleSheet("color : green;")
         
 app = QApplication([])
 window = main()
