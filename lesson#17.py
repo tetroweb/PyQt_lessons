@@ -28,6 +28,12 @@ class main(QWidget):
         self.resize(800,500)
         self.show()
         
+        self.group.toggled.connect(self.change)
+        
+        
+        
+            
+        
         
 app = QApplication([])
 window = main()
