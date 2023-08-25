@@ -5,6 +5,18 @@ from PyQt5.QtGui import *
 font1 = QFont("Tahoma",30)
 font2 = QFont("Consolas",18)
 
+class button(QPushButton):
+    def __init__(self,text,line):
+        super().__init__(text,line)
+        
+        self.line = line
+        self.clicked.connect(self.control)
+    def control(self):
+        if self.line.text() == "0":
+            if self.text().isnumeric():
+                self.line.setText(self.text())
+
+
 class main(QWidget):
     def __init__(self):
         super().__init__()
@@ -21,28 +33,28 @@ class main(QWidget):
         self.vbox.addWidget(self.line)
         self.line.setAlignment(Qt.AlignRight)
         self.line.setFrame(False)
-
+        self.line.setReadOnly(True)
         self.button_list = [
-            QPushButton("x^2"),
-            QPushButton("C"),
-            QPushButton("<-"),
-            QPushButton("/"),
-            QPushButton("7"),
-            QPushButton("8"),
-            QPushButton("9"),
-            QPushButton("x"),
-            QPushButton("4"),
-            QPushButton("5"),
-            QPushButton("6"),
-            QPushButton("+"),
-            QPushButton("1"),
-            QPushButton("2"),
-            QPushButton("3"),
-            QPushButton("-"),
-            QPushButton(""),
-            QPushButton("0"),
-            QPushButton(","),
-            QPushButton("=")
+            button("x^2",self.line),
+            button("C",self.line),
+            button("<-",self.line),
+            button("/",self.line),
+            button("7",self.line),
+            button("8",self.line),
+            button("9",self.line),
+            button("x",self.line),
+            button("4",self.line),
+            button("5",self.line),
+            button("6",self.line),
+            button("+",self.line),
+            button("1",self.line),
+            button("2",self.line),
+            button("3",self.line),
+            button("-",self.line),
+            button("",self.line),
+            button("0",self.line),
+            button(",",self.line),
+            button("=",self.line)
             
         ]
         
