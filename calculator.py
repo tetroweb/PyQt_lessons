@@ -24,10 +24,10 @@ class button(QPushButton):
             if self.text().isnumeric():
                 self.line.setText(self.text())
             else:
-                if self.text() not in (["x^2","C","←","="]):
+                if self.text() not in ["x^2","C","←","=",","]:
                     self.line.setText(self.line.text()+self.text())
         else:
-            if self.text() not in (["x^2","C","←","="]):
+            if self.text() not in ["x^2","C","←","=",","]:
                 if self.line.text()[-1].isnumeric():
                     self.line.setText(self.line.text()+self.text())
                 else:
@@ -36,19 +36,22 @@ class button(QPushButton):
                     else:
                         # self.line.backspace()#delete last character in text
                         self.line.setText(self.line.text()[:-1]+self.text())   
-        if self.text == ",":
+        if self.text() == ",":
             c = self.line.text().count(",")
             if c == 0:
                 if self.line.text()[-1].isnumeric():
-                    self.line.setText(self.line.text()[:-1]+self.text())
+                    self.line.setText(self.line.text()+",")
                 else:
-                    self.line.setText(self.line.text()[:-1],",")
+                    self.line.setText(self.line.text()[:-1]+",")
             if c >= 1:
                 result = self.line.text().split(",")
                 if result[-1].isnumeric():
                     pass
                 else:
-                    self.line.setText(self.line.text()[:-1]+self.text())
+                    if result[-1][:-1].isnumeric():
+                        pass
+                    else:
+                        self.line.setText(self.line.text()+",")
                     
                     
 class main(QWidget):
