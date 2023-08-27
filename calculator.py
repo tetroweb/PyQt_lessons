@@ -148,16 +148,31 @@ class main(QWidget):
         self.setStyleSheet("background-color:#ccc;")
         self.resize(310,450)
         self.show()
+    
     def keyPressEvent(self,e):
         if e.key() in self.key_list:
             i =self.key_list.index(e.key())
             self.css = self.button_list[i].styleSheet()
             self.button_list[i].setStyleSheet("QPushButton{border:none;background-color:green;}")
             self.button_list[i].click()
+    
     def keyReleaseEvent(self,e):
         if e.key() in self.key_list:
             i =self.key_list.index(e.key())
             self.button_list[i].setStyleSheet(self.css)
+    
+    def control(self,text):
+        c = text.find("x")
+        b = text.find("/")  
+          
+        if c != -1 and b !=-1:
+            if c<b:
+                pass
+            elif b>c:
+                
+        elif c != -1 or b != -1:
+    
+        else:
             
 app = QApplication([])
 window = main()    
