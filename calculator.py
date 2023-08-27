@@ -118,6 +118,7 @@ class main(QWidget):
             Qt.Key_Equal,
         ]
         
+        self.list=["x","/","+","-"]
         
         self.grid = QGridLayout()
         self.vbox.addLayout(self.grid)
@@ -168,12 +169,37 @@ class main(QWidget):
         if c != -1 and b !=-1:
             if c<b:
                 pass
-            elif b>c:
-                
-        elif c != -1 or b != -1:
-    
+            elif b<c:
+                result =text.split("/",1)
+                self.slicing1(result[0])
+                self.slicing2(result[1])
+                count = float(self.num1)/float(self.num2)
+                last_text = self.back1 + str(count) + self.back2
+                print(last_text)
+        elif c != -1 or b !=-1:
+            pass
         else:
+            pass  
+    
+    def slicing1(self,text):
+        for i in range(len(text)-1,-1,-1):
+            if text[i] in self.list:
+                self.num1 = text[i+1:]
+                self.back1 = text[:i+1]
+                break
+            if i ==0:
+                self.num1 = text
+                self.back1 = ""
             
+    def slicing2(self,text):
+        for i in range(0,len(text)):
+            if text[i] in self.list:
+                self.num2 = text[:i]
+                self.back2 = text[i:]
+                break
+            if i ==len(text)[-1]:
+                self.num2 = text
+                self.back2 = ""
 app = QApplication([])
 window = main()    
 app.exec()
