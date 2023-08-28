@@ -12,10 +12,13 @@ class button(QPushButton):
         self.line = line
         self.clicked.connect(self.control)
     def control(self):
-        if self.text() == "=":
+        if self.text() == "=" and self.line.text()[-1].isnumeric():
             self.parent.control(self.line.text())
             self.line.setText(self.parent.last_text)
-            
+        
+        elif self.text() == "=" and self.line.text()[-1].isnumeric() == False:
+            self.line.setText("Error !")
+         
         if self.text() =="←":
             self.line.backspace()
             if self.line.text() == "":
@@ -62,6 +65,7 @@ class main(QWidget):
     def __init__(self):
         super().__init__()
         
+        self.last_text = ""
         self.vbox =QVBoxLayout(self)
         self.vbox.setContentsMargins(4,4,4,4)
         self.vbox.setAlignment(Qt.AlignTop)
@@ -161,7 +165,7 @@ class main(QWidget):
         if arg == "/":
             count = float(self.num1)/float(self.num2)
         if arg == "x":
-            count = float(self.num1)/float(self.num2)
+            count = float(self.num1)*float(self.num2)
         if arg == "+":
             count = float(self.num1)+float(self.num2)
         if arg == "-":
@@ -198,13 +202,13 @@ class main(QWidget):
                 elif b<c:
                     self.count(text,"-")
                     self.control(self.last_text)
-                elif c != -1 or b !=-1:
-                    if c != -1:
-                        self.count(text,"+")
-                        self.control(self.last_text)
-                    elif b != -1:
-                        self.count(text,"-")
-                        self.control(self.last_text)  
+            elif c != -1 or b !=-1:
+                if c != -1:
+                    self.count(text,"+")
+                    self.control(self.last_text)
+                elif b != -1:
+                    self.count(text,"-")
+                    self.control(self.last_text)  
                 else:
                     pass
     def slicing1(self,text):
@@ -223,7 +227,7 @@ class main(QWidget):
                 self.num2 = text[:i]
                 self.back2 = text[i:]
                 break
-            if i ==len(text)[-1]:
+            if i ==len(text)-1:
                 self.num2 = text
                 self.back2 = ""
                 
