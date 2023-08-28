@@ -6,12 +6,16 @@ font1 = QFont("Tahoma",30)
 font2 = QFont("Consolas",18)
 
 class button(QPushButton):
-    def __init__(self,text,line):
+    def __init__(self,text,line,parent):
         super().__init__(text)
-        
+        self.parent = parent
         self.line = line
         self.clicked.connect(self.control)
     def control(self):
+        if self.text() == "=":
+            self.parent.control(self.line.text())
+            self.line.setText(self.parent.last_text)
+            
         if self.text() =="←":
             self.line.backspace()
             if self.line.text() == "":
@@ -73,26 +77,26 @@ class main(QWidget):
         self.line.setReadOnly(True)
         self.line.setFocusPolicy(Qt.NoFocus)
         self.button_list = [
-            button("x^2",self.line),
-            button("C",self.line),
-            button("←",self.line),
-            button("/",self.line),
-            button("7",self.line),
-            button("8",self.line),
-            button("9",self.line),
-            button("x",self.line),
-            button("4",self.line),
-            button("5",self.line),
-            button("6",self.line),
-            button("+",self.line),
-            button("1",self.line),
-            button("2",self.line),
-            button("3",self.line),
-            button("-",self.line),
-            button("",self.line),
-            button("0",self.line),
-            button(",",self.line),
-            button("=",self.line)
+            button("x^2",self.line,self),
+            button("C",self.line ,self),
+            button("←",self.line,self),
+            button("/",self.line,self),
+            button("7",self.line,self),
+            button("8",self.line,self),
+            button("9",self.line,self),
+            button("x",self.line,self),
+            button("4",self.line,self),
+            button("5",self.line,self),
+            button("6",self.line,self),
+            button("+",self.line,self),
+            button("1",self.line,self),
+            button("2",self.line,self),
+            button("3",self.line,self),
+            button("-",self.line,self),
+            button("",self.line,self),
+            button("0",self.line,self),
+            button(",",self.line,self),
+            button("=",self.line,self)
             
         ]
         self.key_list = [
@@ -150,17 +154,20 @@ class main(QWidget):
         self.resize(310,450)
         self.show()
     
-    def keyPressEvent(self,e):
-        if e.key() in self.key_list:
-            i =self.key_list.index(e.key())
-            self.css = self.button_list[i].styleSheet()
-            self.button_list[i].setStyleSheet("QPushButton{border:none;background-color:green;}")
-            self.button_list[i].click()
+    def count(self,text,arg):
+        result =text.split(arg,1)
+        self.slicing1(result[0])
+        self.slicing2(result[1])
+        if arg == "/":
+            count = float(self.num1)/float(self.num2)
+        if arg == "x":
+            count = float(self.num1)/float(self.num2)
+        if arg == "+":
+            count = float(self.num1)+float(self.num2)
+        if arg == "-":
+            count = float(self.num1)-float(self.num2)
+        self.last_text = self.back1 + str(count) + self.back2
     
-    def keyReleaseEvent(self,e):
-        if e.key() in self.key_list:
-            i =self.key_list.index(e.key())
-            self.button_list[i].setStyleSheet(self.css)
     
     def control(self,text):
         c = text.find("x")
@@ -168,19 +175,38 @@ class main(QWidget):
           
         if c != -1 and b !=-1:
             if c<b:
-                pass
+                self.count(text,"x")
+                self.control(self.last_text)
             elif b<c:
-                result =text.split("/",1)
-                self.slicing1(result[0])
-                self.slicing2(result[1])
-                count = float(self.num1)/float(self.num2)
-                last_text = self.back1 + str(count) + self.back2
-                print(last_text)
+                self.count(text,"/")
+                self.control(self.last_text)
         elif c != -1 or b !=-1:
-            pass
+            if c != -1:
+                self.count(text,"x")
+                self.control(self.last_text)
+            elif b != -1:
+                self.count(text,"/")
+                self.control(self.last_text)
+            
         else:
-            pass  
-    
+            c = text.find("+")
+            b = text.find("-")  
+            if c != -1 and b !=-1:
+                if c<b:
+                    self.count(text,"+")
+                    self.control(self.last_text)
+                elif b<c:
+                    self.count(text,"-")
+                    self.control(self.last_text)
+                elif c != -1 or b !=-1:
+                    if c != -1:
+                        self.count(text,"+")
+                        self.control(self.last_text)
+                    elif b != -1:
+                        self.count(text,"-")
+                        self.control(self.last_text)  
+                else:
+                    pass
     def slicing1(self,text):
         for i in range(len(text)-1,-1,-1):
             if text[i] in self.list:
@@ -200,6 +226,24 @@ class main(QWidget):
             if i ==len(text)[-1]:
                 self.num2 = text
                 self.back2 = ""
+                
+    
+    def keyPressEvent(self,e):
+        if e.key() in self.key_list:
+            i =self.key_list.index(e.key())
+            self.css = self.button_list[i].styleSheet()
+            self.button_list[i].setStyleSheet("QPushButton{border:none;background-color:green;}")
+            self.button_list[i].click()
+    
+    def keyReleaseEvent(self,e):
+        if e.key() in self.key_list:
+            i =self.key_list.index(e.key())
+            self.button_list[i].setStyleSheet(self.css)
+    
+    
+    
+    
+
 app = QApplication([])
 window = main()    
 app.exec()
