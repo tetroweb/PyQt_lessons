@@ -12,7 +12,7 @@ class button(QPushButton):
         self.line = line
         self.clicked.connect(self.control)
     def control(self):
-        if self.text() == "=" and self.line.text()[-1].isnumeric():
+        if self.text() == "=" and self.line.text()[-1].isnumeric() :
             self.parent.control(self.line.text())
             try:
                 self.line.setText(self.parent.last_text)
@@ -29,7 +29,7 @@ class button(QPushButton):
         if self.text() =="C":
             self.line.setText("0")    
         
-        if self.line.text() == "0":
+        if self.line.text() == "0"  :
             if self.text().isnumeric():
                 self.line.setText(self.text())
             else:
@@ -37,8 +37,11 @@ class button(QPushButton):
                     self.line.setText(self.line.text()+self.text())
         else:
             if self.text() not in ["x^2","C","←","=",","]:
-                if self.line.text()[-1].isnumeric():
-                    self.line.setText(self.line.text()+self.text())
+                try:
+                    if self.line.text()[-1].isnumeric() :
+                        self.line.setText(self.line.text()+self.text())
+                except:
+                    self.line.setText(self.text())
                 else:
                     if self.text().isnumeric():
                         self.line.setText(self.line.text()+self.text())
@@ -49,9 +52,9 @@ class button(QPushButton):
             c = self.line.text().count(",")
             if c == 0:
                 if self.line.text()[-1].isnumeric():
-                    self.line.setText(self.line.text()+",")
+                    self.line.setText(self.line.text()+".")
                 else:
-                    self.line.setText(self.line.text()[:-1]+",")
+                    self.line.setText(self.line.text()[:-1]+".")
             if c >= 1:
                 result = self.line.text().split(",")
                 if result[-1].isnumeric():
@@ -60,7 +63,7 @@ class button(QPushButton):
                     if result[-1][:-1].isnumeric():
                         pass
                     else:
-                        self.line.setText(self.line.text()+",")
+                        self.line.setText(self.line.text()+".")
                     
                     
 class main(QWidget):
@@ -212,7 +215,7 @@ class main(QWidget):
                     self.count(text,"-")
                     self.control(self.last_text)  
                 else:
-                    pass
+                    self.last_text = self.line.text()
     def slicing1(self,text):
         for i in range(len(text)-1,-1,-1):
             if text[i] in self.list:
