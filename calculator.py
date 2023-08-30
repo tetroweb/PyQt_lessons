@@ -14,8 +14,10 @@ class button(QPushButton):
     def control(self):
         if self.text() == "=" and self.line.text()[-1].isnumeric():
             self.parent.control(self.line.text())
-            self.line.setText(self.parent.last_text)
-        
+            try:
+                self.line.setText(self.parent.last_text)
+            except:
+                pass
         elif self.text() == "=" and self.line.text()[-1].isnumeric() == False:
             self.line.setText("Error !")
          
@@ -193,20 +195,20 @@ class main(QWidget):
                 self.control(self.last_text)
             
         else:
-            c = text.find("+")
-            b = text.find("-")  
-            if c != -1 and b !=-1:
-                if c<b:
+            t = text.find("+")
+            c = text.find("-")  
+            if t != -1 and c !=-1:
+                if t<c:
                     self.count(text,"+")
                     self.control(self.last_text)
-                elif b<c:
+                elif c<t:
                     self.count(text,"-")
                     self.control(self.last_text)
-            elif c != -1 or b !=-1:
-                if c != -1:
+            elif c != -1 or t !=-1:
+                if t != -1:
                     self.count(text,"+")
                     self.control(self.last_text)
-                elif b != -1:
+                elif c != -1:
                     self.count(text,"-")
                     self.control(self.last_text)  
                 else:
@@ -236,14 +238,19 @@ class main(QWidget):
         if e.key() in self.key_list:
             i =self.key_list.index(e.key())
             self.css = self.button_list[i].styleSheet()
-            self.button_list[i].setStyleSheet("QPushButton{border:none;background-color:green;}")
+            self.button_list[i].setStyleSheet("QPushButton{border:none;background-color:green;}QPushButton::hover{background-color: #bbb;}")
             self.button_list[i].click()
-    
+        if e.key() in [Qt.Key_Return,Qt.Key_Enter]:
+            self.css = self.button_list[-1].styleSheet()
+            self.button_list[-1].setStyleSheet("QPushButton{border:none;background-color:green;}QPushButton::hover{background-color: #bbb;}")
+            self.button_list[-1].click()
     def keyReleaseEvent(self,e):
         if e.key() in self.key_list:
             i =self.key_list.index(e.key())
             self.button_list[i].setStyleSheet(self.css)
-    
+        if e.key() in [Qt.Key_Return,Qt.Key_Enter]:
+            self.button_list[-1].setStyleSheet(self.css)
+            
     
     
     
