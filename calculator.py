@@ -37,11 +37,10 @@ class button(QPushButton):
                     self.line.setText(self.line.text()+self.text())
         else:
             if self.text() not in ["x^2","C","←","=",","]:
-                try:
-                    if self.line.text()[-1].isnumeric() :
-                        self.line.setText(self.line.text()+self.text())
-                except:
-                    self.line.setText(self.text())
+                
+                if self.line.text()[-1].isnumeric():
+                        self.line.setText(self.line.text() + self.text())
+                
                 else:
                     if self.text().isnumeric():
                         self.line.setText(self.line.text()+self.text())
