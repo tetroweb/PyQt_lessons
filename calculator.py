@@ -35,6 +35,8 @@ class button(QPushButton):
             else:
                 if self.text() not in ["x^2","C","←","=",","]:
                     self.line.setText(self.line.text()+self.text())
+        elif self.line.text() =="":
+            self.line.setText("0")
         else:
             if self.text() not in ["x^2","C","←","=",","]:
                 
@@ -54,15 +56,20 @@ class button(QPushButton):
                     self.line.setText(self.line.text()+".")
                 else:
                     self.line.setText(self.line.text()[:-1]+".")
-            if c >= 1:
-                result = self.line.text().split(",")
-                if result[-1].isnumeric():
-                    pass
-                else:
-                    if result[-1][:-1].isnumeric():
-                        pass
-                    else:
-                        self.line.setText(self.line.text()+".")
+            # if c >= 1:           DÜZELTİLECEK
+            #     result = self.line.text().split(",",1)
+            #     side1 = result[0]
+            #     side2= result[1]
+            #     if result[1][-1].isnumeric():
+            #         pass
+            #     elif result[1][-1] ==",":
+            #         self.line.setText(self.line.text()[-1])
+            #     else:
+            #         if result[1][-1][:-1].isnumeric():
+            #             pass
+            #         else:
+            #             self.line.setText(self.line.text()+".")
+                
                     
                     
 class main(QWidget):
