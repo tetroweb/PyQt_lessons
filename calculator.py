@@ -43,6 +43,7 @@ class button(QPushButton):
                     pass
             elif c>1:
                 result = self.line.text().split(["x","+","-","/"])
+                
         if self.line.text() == "0"  :
             if self.text().isnumeric():
                 self.line.setText(self.text())
