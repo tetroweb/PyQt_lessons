@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
+
 font1 = QFont("Tahoma",30)
 font2 = QFont("Consolas",18)
 
@@ -28,21 +29,24 @@ class button(QPushButton):
             
         if self.text() =="C":
             self.line.setText("0")    
-        
-        if self.text() == ",":
             
-            c = self.line.text().count(",")
-            if c == 0:
-                if self.line.text()[-1].isnumeric():
-                    self.line.setText(self.line.text()+",")
+        if self.text() == ",":
+            current_text = self.line.text()
+    
+            # Metin boşsa veya son karakter bir işlem operatörü değilse ve metinde zaten bir virgül yoksa
+            if current_text == "" or (current_text[-1] not in ["+", "-", "x", "/"] and "." not in current_text):
+                # Eğer metin boşsa veya sadece bir işlem operatörü varsa, virgülü ilk rakamın yanına ekleyebiliriz.
+                if current_text == "" or (current_text[-1] in ["+", "-", "x", "/"]):
+                    self.line.setText(current_text + "0.")
+                
                 else:
-                    self.line.setText(self.line.text()[:-1]+",")
-            if c == 1:
-                result = self.line.text().split(",")
-                if result[-1].isnumeric():
-                    pass
-            elif c>1:
-                result = self.line.text().split(["x","+","-","/"])
+                    self.line.setText(current_text + ".")
+            elif current_text.count(".") <= current_text.count("+") + current_text.count("-") + current_text.count("x") + current_text.count("/") and current_text[-1].isnumeric():
+                    self.line.setText(current_text + ".")
+        
+            
+            
+            
                 
         if self.line.text() == "0"  :
             if self.text().isnumeric():
